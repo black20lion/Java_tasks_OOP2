@@ -1,6 +1,8 @@
 package ru.myCompany;
 
 import ru.myCompany.MyPolynomial.MyPolynomial;
+import ru.myCompany.ball.Ball;
+import ru.myCompany.ball.Container;
 import ru.myCompany.myComplex.MyComplex;
 
 public class Main {
@@ -23,13 +25,13 @@ public class Main {
         System.out.println(complex3.argument());
         System.out.println("==================");
 
-        MyComplex complex4 = new MyComplex(0,5);
+        MyComplex complex4 = new MyComplex(0, 5);
         System.out.println(complex4);
         System.out.println(complex4.magnitude());
         System.out.println(complex4.argument());
         System.out.println("==================");
 
-        MyComplex complex5 = new MyComplex(0,-5);
+        MyComplex complex5 = new MyComplex(0, -5);
         System.out.println(complex5);
         System.out.println(complex5.magnitude());
         System.out.println(complex5.argument());
@@ -63,7 +65,7 @@ public class Main {
         System.out.println(complex8);
         System.out.println("==================");
 
-        MyPolynomial polynomial1 = new MyPolynomial(-1, 2, -1, -5 , 0, -18, 20, 12);
+        MyPolynomial polynomial1 = new MyPolynomial(-1, 2, -1, -5, 0, -18, 20, 12);
         System.out.println(polynomial1);
         System.out.println(polynomial1.evaluate(2));
         System.out.println("==================");
@@ -81,5 +83,17 @@ public class Main {
 
         MyPolynomial polynomial6 = polynomial3.multiply(polynomial4);
         System.out.println(polynomial6);
+        System.out.println("==================");
+
+        Ball ball1 = new Ball(2, 1, 3, 10, -45);
+        System.out.println(ball1);
+
+        Ball ball2 = new Ball(2, 1, 1, 10, -45);
+
+        Container container1 = new Container(-2, -2, 7, 5);
+        System.out.println(container1);
+
+        System.out.println(container1.collides(ball1));
+        System.out.println(container1.collides(ball2));
     }
 }

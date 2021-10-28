@@ -21,7 +21,7 @@ public class MyPolynomial {
         for (int i = coeffs.length - 1; i >= 0; i--) {
 
             if (coeffs[i] != 1 && coeffs[i] != -1 && coeffs[i] != 0)
-            result += coeffs[i];
+                result += coeffs[i];
             else if (coeffs[i] == -1 && i != 0)
                 result += "-";
             else if (coeffs[i] == -1 && i == 0)
@@ -29,12 +29,11 @@ public class MyPolynomial {
             else if (coeffs[i] == 1 && i == 0)
                 result += coeffs[i];
 
-            if ( i > 1 && coeffs[i] != 0) {
+            if (i > 1 && coeffs[i] != 0) {
                 result += "x^" + i;
                 if (coeffs[i - 1] > 0)
                     result += "+";
-            }
-            else if (i > 0 && coeffs[i] != 0) {
+            } else if (i > 0 && coeffs[i] != 0) {
                 result += "x";
                 if (coeffs[i - 1] > 0)
                     result += "+";
@@ -43,7 +42,7 @@ public class MyPolynomial {
         return result;
     }
 
-    public double evaluate (double x) throws RuntimeException{
+    public double evaluate(double x) throws RuntimeException {
         if (coeffs.length == 0) throw new RuntimeException("Polynomial is epmpty");
         double result = 0.0;
         for (int i = coeffs.length - 1; i >= 1; i--) {
@@ -61,11 +60,10 @@ public class MyPolynomial {
             for (int i = 0; i < right.coeffs.length; i++) {
                 result.coeffs[i] += right.coeffs[i];
             }
-        }
-        else {
+        } else {
             double[] resultArray = right.coeffs.clone();
             result = new MyPolynomial(resultArray);
-            for (int i =0; i < this.coeffs.length; i++) {
+            for (int i = 0; i < this.coeffs.length; i++) {
                 result.coeffs[i] += this.coeffs[i];
             }
         }
@@ -81,10 +79,10 @@ public class MyPolynomial {
             result.coeffs[i] = 0;
         }
 
-        for (int i = this.coeffs.length - 1; i >=0; i--) {
+        for (int i = this.coeffs.length - 1; i >= 0; i--) {
             for (int j = right.coeffs.length - 1; j >= 0; j--) {
                 if (this.coeffs[i] != 0 && right.coeffs[j] != 0) {
-                    result.coeffs[i+j] += this.coeffs[i] * right.coeffs[j];
+                    result.coeffs[i + j] += this.coeffs[i] * right.coeffs[j];
                 }
             }
         }

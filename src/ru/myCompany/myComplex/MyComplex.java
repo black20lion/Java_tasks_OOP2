@@ -77,21 +77,21 @@ public class MyComplex {
     }
 
     public double magnitude() {
-        return sqrt(pow(real,2) + pow(imag, 2));
+        return sqrt(pow(real, 2) + pow(imag, 2));
     }
 
-    public double argument() throws IllegalArgumentException{
+    public double argument() throws IllegalArgumentException {
         if (real == 0.0 && imag == 0.0) throw new IllegalArgumentException("Argument of zero is undefined");
-        else if(real > 0.0)
-            return Math.atan(imag/real);
-        else if(real < 0.0 && imag >= 0.0)
-            return Math.PI + atan(imag/real);
+        else if (real > 0.0)
+            return Math.atan(imag / real);
+        else if (real < 0.0 && imag >= 0.0)
+            return Math.PI + atan(imag / real);
         else if (real < 0.0 && imag < 0.0)
-            return -Math.PI + atan(imag/real);
+            return -Math.PI + atan(imag / real);
         else if (real == 0.0 && imag > 0.0)
-            return Math.PI/2;
+            return Math.PI / 2;
         else
-            return -Math.PI/2;
+            return -Math.PI / 2;
     }
 
     public MyComplex add(MyComplex right) {
@@ -127,11 +127,11 @@ public class MyComplex {
         return this;
     }
 
-    public MyComplex divide (MyComplex right) throws IllegalArgumentException {
+    public MyComplex divide(MyComplex right) throws IllegalArgumentException {
         if (right.real == 0.0 && right.imag == 0.0) throw new IllegalArgumentException("Division by zero is illegal");
         double startReal = this.real;
         this.real = (this.real * right.real + this.imag * right.imag) / (Math.pow(right.real, 2) + Math.pow(right.imag, 2));
-        this.imag = (this.imag * right.real - startReal * right.imag) / (Math.pow(right.real,2) + Math.pow(right.imag,2));
+        this.imag = (this.imag * right.real - startReal * right.imag) / (Math.pow(right.real, 2) + Math.pow(right.imag, 2));
         return this;
     }
 
