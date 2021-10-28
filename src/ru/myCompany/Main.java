@@ -1,5 +1,6 @@
 package ru.myCompany;
 
+import ru.myCompany.MyPolynomial.MyPolynomial;
 import ru.myCompany.myComplex.MyComplex;
 
 public class Main {
@@ -60,6 +61,25 @@ public class Main {
 
         MyComplex complex8 = complex4.conjugate();
         System.out.println(complex8);
+        System.out.println("==================");
 
+        MyPolynomial polynomial1 = new MyPolynomial(-1, 2, -1, -5 , 0, -18, 20, 12);
+        System.out.println(polynomial1);
+        System.out.println(polynomial1.evaluate(2));
+        System.out.println("==================");
+
+        MyPolynomial polynomial2 = new MyPolynomial();
+        System.out.println(polynomial2);
+        System.out.println("==================");
+
+        MyPolynomial polynomial3 = new MyPolynomial(-5, 6, 12);
+        MyPolynomial polynomial4 = new MyPolynomial(2, 5, 10, 7);
+        MyPolynomial polynomial5 = polynomial3.add(polynomial4);
+        System.out.println(polynomial5);
+        System.out.println(polynomial4);
+        System.out.println("==================");
+
+        MyPolynomial polynomial6 = polynomial3.multiply(polynomial4);
+        System.out.println(polynomial6);
     }
 }
