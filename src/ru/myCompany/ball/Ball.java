@@ -87,7 +87,7 @@ public class Ball {
     }
 
     public void reflectHorizontal() {
-        xDelta = - xDelta;
+        xDelta = -xDelta;
     }
 
     public void reflectVertical() {
