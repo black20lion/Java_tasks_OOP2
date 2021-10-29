@@ -63,17 +63,22 @@ public class MyComplex {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MyComplex myComplex = (MyComplex) o;
-        return Double.compare(myComplex.real, real) == 0 && Double.compare(myComplex.imag, imag) == 0;
-    }
 
-    public boolean equals(double real, double imag) {
-        return Double.compare(this.real, real) == 0 && Double.compare(this.imag, imag) == 0;
+        MyComplex complex = (MyComplex) o;
+
+        if (Double.compare(complex.real, real) != 0) return false;
+        return Double.compare(complex.imag, imag) == 0;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(real, imag);
+        int result;
+        long temp;
+        temp = Double.doubleToLongBits(real);
+        result = (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(imag);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
     }
 
     public double magnitude() {

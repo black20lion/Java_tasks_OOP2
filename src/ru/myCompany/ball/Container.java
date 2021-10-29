@@ -13,6 +13,28 @@ public class Container {
         this.y2 = y1 + height;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Container container = (Container) o;
+
+        if (x1 != container.x1) return false;
+        if (y1 != container.y1) return false;
+        if (x2 != container.x2) return false;
+        return y2 == container.y2;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = x1;
+        result = 31 * result + y1;
+        result = 31 * result + x2;
+        result = 31 * result + y2;
+        return result;
+    }
+
     public int getX() {
         return x1;
     }

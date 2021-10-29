@@ -17,6 +17,30 @@ public class Ball {
         yDelta = (float) -speed * (float) Math.sin(Math.toRadians(direction));
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Ball ball = (Ball) o;
+
+        if (Float.compare(ball.x, x) != 0) return false;
+        if (Float.compare(ball.y, y) != 0) return false;
+        if (radius != ball.radius) return false;
+        if (Float.compare(ball.xDelta, xDelta) != 0) return false;
+        return Float.compare(ball.yDelta, yDelta) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (x != +0.0f ? Float.floatToIntBits(x) : 0);
+        result = 31 * result + (y != +0.0f ? Float.floatToIntBits(y) : 0);
+        result = 31 * result + radius;
+        result = 31 * result + (xDelta != +0.0f ? Float.floatToIntBits(xDelta) : 0);
+        result = 31 * result + (yDelta != +0.0f ? Float.floatToIntBits(yDelta) : 0);
+        return result;
+    }
+
     public float getX() {
         return x;
     }

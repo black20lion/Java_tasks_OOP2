@@ -1,6 +1,6 @@
 package ru.myCompany;
 
-import ru.myCompany.MyPolynomial.MyPolynomial;
+import ru.myCompany.myPolynomial.MyPolynomial;
 import ru.myCompany.ball.Ball;
 import ru.myCompany.ball.Container;
 import ru.myCompany.myComplex.MyComplex;
@@ -66,6 +66,7 @@ public class Main {
         System.out.println("==================");
 
         MyPolynomial polynomial1 = new MyPolynomial(-1, 2, -1, -5, 0, -18, 20, 12);
+        System.out.println(polynomial1.getDegree());
         System.out.println(polynomial1);
         System.out.println(polynomial1.evaluate(2));
         System.out.println("==================");
@@ -85,7 +86,7 @@ public class Main {
         System.out.println(polynomial6);
         System.out.println("==================");
 
-        Ball ball1 = new Ball(2, 1, 3, 10, -45);
+        Ball ball1 = new Ball(2, 1, 3, 10, -135);
         System.out.println(ball1);
 
         Ball ball2 = new Ball(2, 1, 1, 10, -45);
@@ -95,5 +96,152 @@ public class Main {
 
         System.out.println(container1.collides(ball1));
         System.out.println(container1.collides(ball2));
+
+        System.out.println("==================");
+
+        Container container2 = new Container(-10, -7, 15, 19);
+        Ball ball3 = new Ball(0, 0, 5, 10, -45);
+        System.out.println(ball3);
+        System.out.println(container2.collides(ball3));
+        ball3.move();
+        System.out.println(ball3);
+        System.out.println(container2.collides(ball3));
+        System.out.println("==================");
+
+
+        Container containerTrial = new Container(-9, -9, 27, 22);
+        Ball ballTrial = new Ball(9, 2, 3, 5, -70);
+
+        System.out.println(ballTrial);
+        moveWithReflection(containerTrial, ballTrial);
+        System.out.println(containerTrial.collides(ballTrial));
+
+        System.out.println(ballTrial);
+        moveWithReflection(containerTrial, ballTrial);
+        System.out.println(containerTrial.collides(ballTrial));
+
+        System.out.println(ballTrial);
+        moveWithReflection(containerTrial, ballTrial);
+        System.out.println(containerTrial.collides(ballTrial));
+
+        System.out.println(ballTrial);
+        moveWithReflection(containerTrial, ballTrial);
+        System.out.println(containerTrial.collides(ballTrial));
+
+        System.out.println(ballTrial);
+        moveWithReflection(containerTrial, ballTrial);
+        System.out.println(containerTrial.collides(ballTrial));
+    }
+
+    //Let's use reflectHorizontal() and reflectVertical() methods to avoid collision
+    public static void moveWithReflection(Container container, Ball ball) throws IllegalArgumentException {
+        if (container.collides(ball))
+            throw new IllegalArgumentException("The ball is out of the container");
+
+        // if move freely, no constrains
+        if (ball.getX() + ball.getXDelta() + ball.getRadius() < container.getX() + container.getWidth() &&
+                ball.getX() + ball.getXDelta() - ball.getRadius() > container.getX() &&
+                ball.getY() + ball.getYDelta() + ball.getRadius() < container.getY() + container.getHeight() &&
+                ball.getY() + ball.getYDelta() - ball.getRadius() > container.getY()) {
+            ball.move();
+        }
+
+        // if collides during move, stop on bound and reflect depending on direction of moving
+        else if (ball.getXDelta() > 0 && ball.getYDelta() > 0) {
+            float distanceToRightBound = (container.getX() + container.getWidth()) - (ball.getX() + ball.getRadius());
+            float distanceToBottomBound = (container.getY() + container.getHeight()) - (ball.getY() + ball.getRadius());
+            float timeRightCollision = distanceToRightBound / ball.getXDelta();
+            float timeBottomCollision = distanceToBottomBound / ball.getYDelta();
+
+            if (timeRightCollision < timeBottomCollision) {
+                ball.setX(container.getX() + container.getWidth() - ball.getRadius());
+                ball.setY(ball.getY() + ball.getYDelta() * timeRightCollision);
+                ball.reflectHorizontal();
+
+            } else if (timeRightCollision > timeBottomCollision) {
+                ball.setY(container.getY() + container.getHeight() - ball.getRadius());
+                ball.setX(ball.getX() + ball.getXDelta() * timeBottomCollision);
+                ball.reflectVertical();
+            } else {
+                ball.setX(container.getX() + container.getWidth() - ball.getRadius());
+                ball.setY(container.getY() + container.getHeight() - ball.getRadius());
+                ball.reflectHorizontal();
+                ball.reflectVertical();
+            }
+        } else if (ball.getXDelta() < 0 && ball.getYDelta() > 0) {
+            float distanceToLeftBound = ball.getX() - ball.getRadius() - container.getX();
+            float distanceToBottomBound = (container.getY() + container.getHeight()) - (ball.getY() + ball.getRadius());
+            float timeLeftCollision = distanceToLeftBound / Math.abs(ball.getXDelta());
+            float timeBottomCollision = distanceToBottomBound / ball.getYDelta();
+
+            if (timeLeftCollision < timeBottomCollision) {
+                ball.setX(container.getX() - ball.getRadius());
+                ball.setY(ball.getY() + ball.getYDelta() * timeLeftCollision);
+                ball.reflectHorizontal();
+
+            } else if (timeLeftCollision > timeBottomCollision) {
+                ball.setY(container.getY() + container.getHeight() - ball.getRadius());
+                ball.setX(ball.getX() + ball.getXDelta() * timeBottomCollision);
+                ball.reflectVertical();
+            } else {
+                ball.setX(container.getX() - ball.getRadius());
+                ball.setY(container.getY() + container.getHeight() - ball.getRadius());
+                ball.reflectHorizontal();
+                ball.reflectVertical();
+            }
+        } else if (ball.getXDelta() < 0 && ball.getYDelta() < 0) {
+            float distanceToLeftBound = ball.getX() - ball.getRadius() - container.getX();
+            float distanceToTopBound = ball.getY() - ball.getRadius() - container.getY();
+            float timeLeftCollision = distanceToLeftBound / Math.abs(ball.getXDelta());
+            float timeTopCollision = distanceToTopBound / Math.abs(ball.getYDelta());
+
+            if (timeLeftCollision < timeTopCollision) {
+                ball.setX(container.getX() - ball.getRadius());
+                ball.setY(ball.getY() + ball.getYDelta() * timeLeftCollision);
+                ball.reflectHorizontal();
+
+            } else if (timeLeftCollision > timeTopCollision) {
+                ball.setY(container.getY() + ball.getRadius());
+                ball.setX(ball.getX() + ball.getXDelta() * timeTopCollision);
+                ball.reflectVertical();
+            } else {
+                ball.setX(container.getX() - ball.getRadius());
+                ball.setY(container.getY() + ball.getRadius());
+                ball.reflectHorizontal();
+                ball.reflectVertical();
+            }
+        } else if (ball.getXDelta() > 0 && ball.getYDelta() < 0) {
+            float distanceToRightBound = (container.getX() + container.getWidth()) - (ball.getX() + ball.getRadius());
+            float distanceToTopBound = ball.getY() - ball.getRadius() - container.getY();
+            float timeRightCollision = distanceToRightBound / ball.getXDelta();
+            float timeTopCollision = distanceToTopBound / Math.abs(ball.getYDelta());
+
+            if (timeRightCollision < timeTopCollision) {
+                ball.setX(container.getX() + container.getWidth() - ball.getRadius());
+                ball.setY(ball.getY() + ball.getYDelta() * timeRightCollision);
+                ball.reflectHorizontal();
+            } else if (timeRightCollision > timeTopCollision) {
+                ball.setY(container.getY() + ball.getRadius());
+                ball.setX(ball.getX() + ball.getXDelta() * timeTopCollision);
+                ball.reflectVertical();
+            } else {
+                ball.setX(container.getX() + container.getWidth() - ball.getRadius());
+                ball.setY(container.getY() + ball.getRadius());
+                ball.reflectHorizontal();
+                ball.reflectVertical();
+            }
+        } else if (ball.getXDelta() > 0 && ball.getYDelta() == 0) {
+            ball.setX(container.getX() + container.getWidth() - ball.getRadius());
+            ball.reflectHorizontal();
+        } else if (ball.getXDelta() < 0 && ball.getYDelta() == 0) {
+            ball.setX(container.getX() - ball.getRadius());
+            ball.reflectHorizontal();
+        } else if (ball.getXDelta() == 0 && ball.getYDelta() > 0) {
+            ball.setY(container.getY() + container.getHeight() - ball.getRadius());
+            ball.reflectVertical();
+        } else if (ball.getXDelta() == 0 && ball.getYDelta() < 0) {
+            ball.setY(container.getY() + ball.getRadius());
+            ball.reflectVertical();
+        }
     }
 }

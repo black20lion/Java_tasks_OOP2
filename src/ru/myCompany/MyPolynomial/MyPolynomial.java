@@ -1,16 +1,36 @@
-package ru.myCompany.MyPolynomial;
+package ru.myCompany.myPolynomial;
 
 import java.util.Arrays;
 
 public class MyPolynomial {
     private double[] coeffs;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        MyPolynomial that = (MyPolynomial) o;
+
+        return Arrays.equals(coeffs, that.coeffs);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(coeffs);
+    }
+
     public MyPolynomial(double... coeffs) {
         this.coeffs = coeffs;
     }
 
     public int getDegree() {
-        return coeffs.length - 1;
+        int currentMax = 0;
+        for (int i = 0; i <= coeffs.length - 1; i++) {
+            if (coeffs[i] != 0)
+                currentMax = i;
+        }
+        return currentMax;
     }
 
     @Override
