@@ -86,6 +86,9 @@ public class Main {
         System.out.println(polynomial6);
         System.out.println("==================");
 
+        Ball ballNotExist = new Ball(2, 1, 3, 10, -195);
+        System.out.println(ballNotExist);
+
         Ball ball1 = new Ball(2, 1, 3, 10, -135);
         System.out.println(ball1);
 
