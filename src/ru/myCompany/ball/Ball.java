@@ -8,7 +8,7 @@ public class Ball {
     private float yDelta;
 
     public Ball(float x, float y, int radius, int speed, int direction) {
-        assert (direction <= 180 && direction >= -180);
+        assert (direction <= 180 && direction >= -180) : "Direction is expected to be between 180 and = -180";
         this.x = x;
         this.y = y;
         this.radius = radius;
